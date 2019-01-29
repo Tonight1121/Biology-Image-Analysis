@@ -109,6 +109,29 @@ def sobel(img):
     mag *= 255.0 / np.max(mag)  # normalize (Q&D)
     imageio.imwrite('sobel.jpg', mag)
 
+    sobel_edge = (mag > 50)*255 + (mag<=50)*0
+    imageio.imwrite('sobel_edge.jpg', sobel_edge)
+
+def mysobel(img):
+    threshold = 50
+    kernel_x = np.asarray([[1, 0, -1],
+                           [2, 0, -2],
+                           [1, 0, -1]])
+    kernel_y = np.asarray([[1, 2, 1],
+                           [0, 0, 0],
+                           [-1, -2, -1]])
+    dx = cv2.filter2D(img, -1, kernel_x)
+    dy = cv2.filter2D(img, -1, kernel_y)
+    mix = np.hypot(dx, dy)  # magnitude
+    mix *= 255.0 / np.max(mix)  # normalize (Q&D)
+    sobel_edge = (mix > threshold)*255 + (mix <= threshold)*0
+
+    cv2.imwrite('x_gradient.jpg', dx)
+    cv2.imwrite('y_gradient.jpg', dy)
+    cv2.imwrite('my_sobel_edge.jpg', sobel_edge)
+    time.sleep(30)
+
+
 def canny_edge(img):
     img = cv2.GaussianBlur(img, (5, 5), 0)
     edges = cv2.Canny(img, 40, 60)
@@ -117,8 +140,11 @@ def canny_edge(img):
 if __name__ == '__main__':
     img = cv2.imread(fName, 0)
 
-    sobel(img)
+    mysobel(img)
 
+    # sobel(img)
+
+    sobel(img)
 
     canny_edge(img)
 

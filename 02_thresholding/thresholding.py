@@ -20,6 +20,16 @@ fName = 'T.png'
 # fName = 'letter.png'
 
 def otsu_segmentation(img):
+<<<<<<< HEAD
+    since = time.time()
+    # global thresholding
+    # ret1, th1 = cv2.threshold(img, 80, 255, cv2.THRESH_BINARY)
+    # Otsu's thresholding
+    ret2, th2 = cv2.threshold(img, 0, 255, cv2.THRESH_OTSU)
+    # Otsu's thresholding after Gaussian filtering
+    # blur = cv2.GaussianBlur(img, (5, 5), 0)
+    # th3 = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 7, 5)
+=======
     # global thresholding
     ret1, th1 = cv2.threshold(img, 80, 255, cv2.THRESH_BINARY)
     # Otsu's thresholding
@@ -27,6 +37,7 @@ def otsu_segmentation(img):
     # Otsu's thresholding after Gaussian filtering
     blur = cv2.GaussianBlur(img, (5, 5), 0)
     th3 = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 7, 5)
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
     # plot all the images and their histograms
     # images = [img, 0, th1,
     #          img, 0, th2,
@@ -45,7 +56,13 @@ def otsu_segmentation(img):
     # plt.savefig('otsu.jpg')
     # plt.show()
     cv2.imwrite('otsu.jpg', th2)
+<<<<<<< HEAD
+    # cv2.imwrite('otsu_orginal.jpg', th3)
+    time_elapsed = time.time() - since
+    print('Otsu completed in {}'.format(time_elapsed))
+=======
     cv2.imwrite('otsu_orginal.jpg', th3)
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
 
 def my_meanc(img, neighbour=7, C=30):
     since = time.time()
@@ -79,13 +96,21 @@ def my_meanc(img, neighbour=7, C=30):
 
     center_img = img[margin:-margin, margin:-margin]
     neighbour_mean = np.mean(neighbour_space, axis=2)
+<<<<<<< HEAD
+    # neighbour_median = np.median(neighbour_space, axis=2)
+=======
     neighbour_median = np.median(neighbour_space, axis=2)
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
     # print('center_img shape {}'.format(center_img.shape))
     # print('neighbour_mean shape {}'.format(neighbour_mean.shape))
     # print('neighbour_median shape {}'.format(neighbour_median.shape))
 
     # mask_mean = (center_img <= neighbour_mean) * 0 + (center_img > neighbour_mean) * 255
+<<<<<<< HEAD
+    mask_mean = (center_img+C <= neighbour_mean) * 255 + (center_img+C > neighbour_mean) * 0
+=======
     mask_mean = (center_img+C <= neighbour_mean) * 0 + (center_img+C > neighbour_mean) * 255
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
     # mask_median = (center_img+C <= neighbour_median) * 0 + (center_img+C > neighbour_median) * 255
     cv2.imwrite('mask_mean.jpg', mask_mean)
     # cv2.imwrite('mask_median.jpg', mask_median)
@@ -123,7 +148,11 @@ def my_medianc(img, neighbour=7, C=30):
     # print('neighbour_space shape {}'.format(neighbour_space.shape))
 
     center_img = img[margin:-margin, margin:-margin]
+<<<<<<< HEAD
+    # neighbour_mean = np.mean(neighbour_space, axis=2)
+=======
     neighbour_mean = np.mean(neighbour_space, axis=2)
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
     neighbour_median = np.median(neighbour_space, axis=2)
     # print('center_img shape {}'.format(center_img.shape))
     # print('neighbour_mean shape {}'.format(neighbour_mean.shape))
@@ -131,7 +160,11 @@ def my_medianc(img, neighbour=7, C=30):
 
     # mask_mean = (center_img <= neighbour_mean) * 0 + (center_img > neighbour_mean) * 255
     # mask_mean = (center_img+C <= neighbour_mean) * 0 + (center_img+C > neighbour_mean) * 255
+<<<<<<< HEAD
+    mask_median = (center_img+C <= neighbour_median) * 255 + (center_img+C > neighbour_median) * 0
+=======
     mask_median = (center_img+C <= neighbour_median) * 0 + (center_img+C > neighbour_median) * 255
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
     # cv2.imwrite('mask_mean.jpg', mask_mean)
     cv2.imwrite('mask_median.jpg', mask_median)
     time_elapsed = time.time() - since
@@ -146,7 +179,11 @@ def otsu(image):
     # cv2.imwrite('otsu_global.jpg', binary_local)
     # binary_global = image > global_thresh
 
+<<<<<<< HEAD
+    block_size = 329
+=======
     block_size = 35
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
     local_thresh = threshold_local(image, block_size, offset=10)
     binary_local = (image > local_thresh) * 255 + (image <= local_thresh) * 0
     cv2.imwrite('otsu.jpg', binary_local)
@@ -159,15 +196,33 @@ def otsu(image):
 def mean_c(img):
     since = time.time()
 
+<<<<<<< HEAD
+    th3 = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 7, -5)
+    cv2.imwrite('mean_C.jpg', th3)
+
+    time_elapsed = time.time() - since
+    print('Library Mean-C completed in {}'.format(time_elapsed))
+=======
     th3 = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 7, 5)
     cv2.imwrite('mean_C.jpg', th3)
 
     time_elapsed = time.time() - since
     print('Mean-C completed in {}'.format(time_elapsed))
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
 
 if __name__ == '__main__':
     img = cv2.imread(fName, 0)
 
+<<<<<<< HEAD
+    # otsu_segmentation(img)
+
+    otsu(img)
+
+    # mean_c(img)
+
+    my_meanc(img, neighbour=7, C=160)
+    my_medianc(img, neighbour=7, C=160)
+=======
     otsu_segmentation(img)
 
     otsu(img)
@@ -176,4 +231,5 @@ if __name__ == '__main__':
 
     my_meanc(img, neighbour=7, C=4)
     my_medianc(img, neighbour=7, C=4)
+>>>>>>> be8d203262c26ea8443b18cf1c24244d1c283c88
 
